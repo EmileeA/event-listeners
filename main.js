@@ -3,13 +3,13 @@ const pies = [
     {
       name:'Dutch Apple Pie',
       imageURL: 'https://images.unsplash.com/photo-1542761744-f88e3224ddfa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60',
-      instructor: 'Zoe',
+      instructor: 'zoe',
       iceCream: 'vanilla',
     },
     {
       name:'Berry Pie',
       imageURL: 'https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=60',
-      instructor: 'Zoe',
+      instructor: 'zoe',
       iceCream: 'vanilla',
     },
     {
@@ -39,31 +39,61 @@ const pies = [
   ];
 
   const printToDom = (toPrint, divId) => {
-      document.getElementById(divId).innerHTML += toPrint
+      document.getElementById(divId).innerHTML = toPrint
   }
 //accepts an argument 'piesARRAY' and will lopop through the pies and selecting each pie at a time, then it builds
 //up a dom string that will print out eventually
   const pieBuilder = (piesArray) => {
+      let domString = ''
       for (let i = 0; i < piesArray.length; i++) {
           const pie = piesArray[i]
-          const domString = `
+          domString += `
           <div class="card">
             <h2>${pie.name}</h2>
             <img src=${pie.imageURL} alt='Image of ${pie.name}' />
             </div>
             `
             //this function is looking for something to print out on the page and a div id to print it out. The name of the divid is piezone
-            printToDom(domString, 'pie-zone')
+            
       }
+      printToDom(domString, 'pie-zone')
   }
   
+// document.getElementById('my-button').addEventListener('click', pieBuilder)
 
-  document.getElementById('my-button').addEventListener('click', pieBuilder)
-  document.getElementById('my-button').addEventListener('click', pieBuilder)
-  
-//   document.getElementById('my-button').addEventListener('click', () =>{
-//     console.log('🐭')
+// document.getElementById('my-button').addEventListener('click', () => {
+//     pieBuilder(pies)
 // })
 
-  pieBuilder(pies)
+// document.getElementById('my-button').addEventListener('click', () => {
+//     console.log('🐁')
+// })
 
+const buttonClick = (e) => {
+    // figure out WHO this instructor is for the button we clicked on
+    const instructor = e.target.id
+    // only get those pies from the list of all the pies
+    const selectedPies = []
+    for (let i = 0; i < pies.length; i ++) {
+        const pie = pies[i]
+        if (pie.instructor === instructor) {
+            selectedPies.push(pie)
+        }
+    }
+
+    if (instructor === 'all') {
+        pieBuilder(pies);
+      } else {
+        pieBuilder(selectedPies);
+      }
+    // pass small list of pies back into the pie builder
+}
+
+
+document.getElementById('zoeee').addEventListener('click', buttonClick)
+document.getElementById('michael').addEventListener('click', buttonClick)
+document.getElementById('greg').addEventListener('click', buttonClick)
+document.getElementById('callan').addEventListener('click', buttonClick)
+document.getElementById('all').addEventListener('click', buttonClick)
+
+pieBuilder(pies);
